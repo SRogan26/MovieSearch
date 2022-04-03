@@ -1,0 +1,8 @@
+#results {
+    display: flex;
+    flex-wrap: wrap;  
+}
+.card{
+    margin-right: 2em;
+    background-color:gainsboro;
+}
