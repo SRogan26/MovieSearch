@@ -1,8 +1,17 @@
 #results {
     display: flex;
-    flex-wrap: wrap;  
+    flex-wrap: wrap;
+    padding: 1rem; 
+    justify-content: space-between; 
 }
 .card{
-    margin-right: 2em;
     background-color:gainsboro;
+    margin-bottom:1rem;
+    justify-content: space-between;
+}
+.card-title{
+    font-weight: bold;
+}
+.card-text{
+    font-style: italic;
 }
