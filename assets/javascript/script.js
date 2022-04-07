@@ -31,14 +31,19 @@ searchBtn.addEventListener("click", function (event) {
         const year = movie.Year;
         const poster = movie.Poster;
         const idNumber = movie.imdbID;
+        //CREATE NEW COLUMN ELEMENT TO WRAP OUR CARD INTO
+        const newColDiv = document.createElement("div");
+        newColDiv.classList.add("col-sm-12","col-md-6","col-lg-4");
         //SET UP FUNCTIONALITY TO CREATE A NEW CARD HTML ELEMENT FOR EACH RESULT  
         const newCard = document.createElement('div');
         //ADD THE CARD CLASS TO OUR NEW DIV ELEMENT
         newCard.classList.add('card');
         //GIVE CARD UNIQUE ID ATTRIBUTE
         newCard.setAttribute("id", "result" + i);
+        //APPEND CARD TO COLUMN DIV ELEMENT
+        newColDiv.appendChild(newCard);
         //ADD DIMENSIONS TO CARD ELEMENT, LETS 3 RESULTS DISPLAY PER ROW W/DYNAMIC SIZE
-        newCard.style.width = '30%';
+        //newCard.style.width = '30%';
         //CREATE IMAGE ELEMENT FOR POSTER IMAGE ON CARD
         const newPoster = document.createElement('img');
         //ADD CARD TOP CLASS FOR THE IMAGE ELEMENT
@@ -51,27 +56,27 @@ searchBtn.addEventListener("click", function (event) {
           newPoster.setAttribute("src", imgPlaceholder)
         };
         //CREATE CARD TEXT AREA ELEMENT
-        const newTextArea = document.createElement("div");
-        newTextArea.classList.add("card-body");
+        const newBodyArea = document.createElement("div");
+        newBodyArea.classList.add("card-body");
         //CREATE TITLE AND YEAR ELEMENTS FOR CARD TEXT
         const titleText = document.createElement("h5");
         titleText.classList.add("card-title");
         const yearText = document.createElement("p");
         yearText.classList.add("card-text");
         //ADD TITLE & YEAR TEXT OF SEARCH RESULT TO THEIR ELEMENTS
-        titleText.textContent = title;
+        titleText.innerText = title;
         yearText.textContent = "Released " + year;
         //CREATE BUTTON FOR PLOT, DISPLAYING ID AS TEXT FOR PLACEHOLDER
-        const plotBtn = document.createElement("a");
+        const plotBtn = document.createElement("btn");
         plotBtn.classList.add('btn', 'btn-success');
         plotBtn.setAttribute("href", idSearch + idNumber + '&plot=full');
         plotBtn.textContent = 'Plot: ' + idNumber;
         //ASSEMBLE THE CARD BODY TEXT AREA W/ PLOT BUTTON
-        newTextArea.append(titleText, yearText, plotBtn);
+        newBodyArea.append(titleText, yearText, plotBtn);
         //ADD IMAGE AND CARD TEXT TO CARD ELEMENT
-        newCard.append(newPoster, newTextArea);
+        newCard.append(newPoster, newBodyArea);
         //ADD NEW CARD TO RESULTS DISPLAY AREA
-        searchResults.appendChild(newCard);
+        searchResults.appendChild(newColDiv);
       }
     })
     //.catch IS FOR ERROR HANDLING IN FETCH REQUEST

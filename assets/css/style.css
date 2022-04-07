@@ -1,11 +1,11 @@
-#results {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 1rem; 
-    justify-content: space-between; 
-}
+ #results { 
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+     /* padding: 1rem;  */
+    /* justify-content: space-between;   */
+ } 
 .card{
-    background-color:gainsboro;
+    background-color:rgb(245, 231, 231);
     margin-bottom:1rem;
     justify-content: space-between;
 }
