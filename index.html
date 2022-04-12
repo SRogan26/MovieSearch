@@ -35,6 +35,23 @@
         <div style="background-color:rgb(88, 88, 164) ; height:100%;" class="row" id="results">
         </div>
     </div>
+    <!-- Hidden Modal Component To Display Plot -->
+    <div class="modal fade" id="plot-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Movie Plot</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="plot-text">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--LINK TO OUR SCRIPT-->
     <script src="./assets/javascript/script.js"></script>
 </body>

@@ -8,6 +8,13 @@ const idSearch = 'http://www.omdbapi.com/?apikey=4619adc4&i=';
 //CREATE VARIABLES FOR REFERENCING THE BUTTON AND SEARCH BOX
 var searchBtn = document.querySelector("#searchbtn");
 var searchBox = document.querySelector("#searchbox");
+//CREATE FUNCTION TO GET PLOT TEXT FOR PLOT SUMMARY MODAL
+async function viewPlot(movieid) {
+  const getPlot = await fetch(idSearch + movieid + "&plot=full");
+  const movieByID = await getPlot.json();
+  //console.log(getPlot);
+  return movieByID;
+}
 //ADD LISTENER FOR BUTTON CLICK
 searchBtn.addEventListener("click", function (event) {
   //STOP SUBMIT BUTTON FROM REFRESHING PAGE BY DEFAULT
@@ -21,10 +28,12 @@ searchBtn.addEventListener("click", function (event) {
     })
     .then(data => {
       console.log(data);
+      //CREATE VARIABLE TO REFERENCE RESULTS AREA
+      const searchResults = document.querySelector("#results");
+      //CLEAR PREVIOUS RESULTS IF NECESSARY
+      searchResults.innerHTML = "";
       //FOR LOOP WILL LET US ACCESS EACH SEARCH RESULT INDIVIDUALLY
       for (let i = 0; i < data.Search.length; i++) {
-        //CREATE VARIABLE TO REFERENCE RESULTS AREA
-        const searchResults = document.querySelector("#results");
         //CREATE VARIABLES TO REPRESENT RESULTS FIELDS
         const movie = data.Search[i];
         const title = movie.Title;
@@ -33,7 +42,7 @@ searchBtn.addEventListener("click", function (event) {
         const idNumber = movie.imdbID;
         //CREATE NEW COLUMN ELEMENT TO WRAP OUR CARD INTO
         const newColDiv = document.createElement("div");
-        newColDiv.classList.add("col-sm-12","col-md-6","col-lg-4");
+        newColDiv.classList.add("col-sm-12", "col-md-6", "col-lg-4");
         //SET UP FUNCTIONALITY TO CREATE A NEW CARD HTML ELEMENT FOR EACH RESULT  
         const newCard = document.createElement('div');
         //ADD THE CARD CLASS TO OUR NEW DIV ELEMENT
@@ -67,16 +76,32 @@ searchBtn.addEventListener("click", function (event) {
         titleText.innerText = title;
         yearText.textContent = "Released " + year;
         //CREATE BUTTON FOR PLOT, DISPLAYING ID AS TEXT FOR PLACEHOLDER
-        const plotBtn = document.createElement("btn");
+        const plotBtn = document.createElement("button");
         plotBtn.classList.add('btn', 'btn-success');
-        plotBtn.setAttribute("href", idSearch + idNumber + '&plot=full');
-        plotBtn.textContent = 'Plot: ' + idNumber;
+        //CREATE DATA ATTRIBUTE ON BUTTON TO REFERENCE imdbID of MOVIE
+        plotBtn.setAttribute("data", idNumber);
+        //ADD ATTRIBUTES TO TRIGGER PLOT MODAL
+        plotBtn.setAttribute("data-bs-toggle", "modal");
+        plotBtn.setAttribute("data-bs-target", "#plot-modal");
+        //ADD LABEL TEXT TO BUTTON
+        plotBtn.textContent = idNumber;
+        //ADD "CLICK" EVENT LISTENER TO BUTTON FOR DISPLAYING PLOT TEXTS
+        plotBtn.addEventListener("click", async () => {
+          const movieIdSearch = await viewPlot(idNumber);
+          //ADD REFERENCES TO TITLE AND BODY AREA OF PLOT MODAL
+          const newModalTitle = document.querySelector("#modal-title");
+          const newPlotText = document.querySelector("#plot-text");
+          //ADD TITLE AND PLOT TEXT TO PLOT SUMMARY MODAL AREAS
+          newModalTitle.textContent = movieIdSearch.Title + ", " + movieIdSearch.Year;
+          newPlotText.textContent = movieIdSearch.Plot;
+        }
+        );
         //ASSEMBLE THE CARD BODY TEXT AREA W/ PLOT BUTTON
         newBodyArea.append(titleText, yearText, plotBtn);
         //ADD IMAGE AND CARD TEXT TO CARD ELEMENT
         newCard.append(newPoster, newBodyArea);
         //ADD NEW CARD TO RESULTS DISPLAY AREA
-        searchResults.appendChild(newColDiv);
+        searchResults.prepend(newColDiv);
       }
     })
     //.catch IS FOR ERROR HANDLING IN FETCH REQUEST

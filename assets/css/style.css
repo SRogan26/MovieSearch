@@ -1,17 +1,24 @@
- #results { 
+#results {
     /* display: flex; */
     /* flex-wrap: wrap; */
-     /* padding: 1rem;  */
+    /* padding: 1rem;  */
     /* justify-content: space-between;   */
- } 
-.card{
-    background-color:rgb(245, 231, 231);
-    margin-bottom:1rem;
+}
+
+.card {
+    background-color: rgb(245, 231, 231);
+    margin-bottom: 1rem;
     justify-content: space-between;
 }
-.card-title{
+
+.card-title {
     font-weight: bold;
 }
-.card-text{
+
+.card-text {
     font-style: italic;
+}
+
+.modal-title {
+    font-weight: bold;
 }
